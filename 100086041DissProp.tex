@@ -1,0 +1,247 @@
+\documentclass[12pt]{article}
+
+\usepackage[]{fullpage} 
+\usepackage[]{graphics}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage[square,sort,comma]{natbib}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{array}
+
+\title{Models of Option Pricing}
+\author{Tim Youell\\Dr Chris Greenman\\ University of East Anglia\\School of Computing Sciences}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Originating in ancient Greece, options have used as financial trading tools by traders trying to mitigate risk in their portfolios for thousands of years. The pricing of these derivatives can be formulated in a continuous-time framework by assuming a stochastic differential equation describes the stochastic process an asset follows. Fischer Black and Myron Scholes formed their own asset pricing formula via geometric Brownian motion in 1973 which is now regarded as one of the most well-known pricing model for European call and put options. Using real financial and cryptocurrency data, this project aims to assess limitations behind the Black-Scholes formula to test and justify if it is still appropriate. More recent mathematical solutions and models will also be explored \citep{Lucy} \citep{Lucy2}\citep{Lucy3}.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}  
+The Black-Scholes partial differential equation (BSPDE) formulated by \cite{BSReport}, governs the price evolution of a European put or call option under the Black-Scholes pricing formula. PDEs are used to formulate problems involving functions of several variables, and are either solved by hand, or used to create a relevant computer model. The BSPDE, shown below in equation \ref{BSE}, is used to price these options on stock paying no dividends.
+
+
+\begin{equation} \label{BSE}
+\frac{\delta X}{\delta t} 
++ \frac{1}{2}\sigma^2 S^2\frac{\delta^2 X}{\delta S^2} 
++ rS\frac{\delta X}{\delta S}
+-rX
+=0
+\end{equation}
+\\
+Eliminating risk is the main financial intuition behind the BSPDE. The theory is that users or companies can exactly hedge an option by buying and selling the underlying asset in the correct manner. Corresponding to \cite{BSReport} pricing formula, the hedging that occurs implies an option has a set correct price. The following assumptions regarding the equation need to be considered. 
+\begin{enumerate}
+	\item The stock price follows a stochastic process meaning past stock price data cannot be used to predict and determine future movement. 
+	\item The stock pays no dividends and has no transaction costs. 
+	\item The risk-free rate and the volatility of the stock price is known and constant. 
+\end{enumerate} 
+
+\subsection{Background Information}  \label{Background Information}
+Options have been used as a trading tool for thousands of years, were their origin can be traced back to traders and farmers in ancient Greece becoming unwilling to accept the amount of risk for a low price for their olive crop \citep{Arnold}. The continued use of options has lead to their increased popularity. In 1973, options were revolutionised following the introduction of a new option pricing model. The development of the first equilibrium pricing model by Fischer Black and Myron Scholes and later extended by Robert Merton in 1973 saw the breakthrough of options being used as a security and as financial derivatives \citep{BSReport}. Because of their flexible and cost efficiency, options are now more popular than ever and continue to be traded in their thousands on a daily basis. The Black-Scholes model is still widely used as the primary model for the pricing of European-options today.
+
+\subsection{Purpose of Study}
+The purpose of this study is to test and evaluate Black and Scholes pricing techniques using real financial historic and future data. The idea is to gain knowledge on the options and there pricing techniques, before testing the limitations of \cite{BSReport} and other various formulae such as GARCH. Also, as there is limited literature available on using pricing models with cyrptocurrencies, an important and popular digital currency, theorised to be the future of payment methods, there will also be research into its use.  
+
+\subsection{Statement of the Problem}
+There are currently mixed reviews about the use of the \cite{BSReport} option pricing formula, with various sources saying that it is "past its time" and holds biases. The problem that this research paper is trying to solve is the testing of these accusations. The plan is to use real financial data with the pricing formula, formed back in 1973, to observe if it is still the best model for the pricing of European options and if it is still justified over other models.
+
+\subsection{Aim and Objectives}
+The main aim of this research project is to use the Black-Scholes model to predict the prices of options, testing the formulae and its limitations against other pricing models. 
+
+The project will begin with collecting research on diffusion processes and how they were used to model share prices that lead to the discovery of the Black-Scholes partial differential equation. Finance data will then be gathered, before the collected share data will be checked for log-normality. Tests will also be carried out on to see if the daily increments of the share price is independent daily as well as to estimate the volatility used in the BS pricing formula. Following this, solutions of the pricing formulae for various strike dates will be compared to the actual prices obtained in the financial data. To conclude, the same tests will be carried out using cryptocurrency data. Cryptocurrencies are a new digital currency which are theorised to behave in a significantly volatile manner compared to other stocks, which will be tested for in this project.
+
+\subsection{Definition of Terms}
+This brief section consists of a series of descriptions regarding the key terms and concepts in the research project, allowing a better understanding for the reader.
+\\
+
+A process representing numerical values of a system which randomly change over time, such as the random movement of a gas molecule, is known as being \textbf{stochastic}. This type of process is widely used in the modelling of systems that appear in a very random manner \citep{Stochastic2}. 
+\\
+
+A \textbf{diffusion process} provides a solution to a stochastic differential equation and may be used to model the value of financial derivatives. The process involves a continuous probability density function leading to continual random changes in the variable. As time goes by, the uncertainty in the financial returns increases in a predictable fashion \citep{Stochastic2}.
+\\
+
+An important example of a diffusion process is \textbf{Geometric Brownian Motion} (GBM) which can be described as the random movement of particles in a gas or liquid arising from collisions with other fast-moving particles in the fluid \citep{Ermogenous} \citep{Pollen}. When an asset, typically a stock, follows a continuous-time stochastic process it is said to display GBM because it displays random fluctuations and movement \citep{Klebaner}.
+\\
+
+\textbf{Financial assets} are any item or property owned by a person or company, regarded as having value or available to meet debts, commitments, or legacies. The contract that derives its value from an underlying asset, is known as a \textbf{financial derivative}. 
+\\
+ 
+\textbf{Options} are financial derivatives used by traders to speculate the risk of holding or selling an asset to magnify financial gain. They represent a contract sold by one party to another, from option writer to the option holder. The contract grants the buyer the right, but not the obligation to purchase or sell financial assets, subject to predetermined conditions such as an agreed on \textbf{strike price}, within a specified period of time \citep{Maths}. There are two types of options which need to be addressed:
+\begin{enumerate}
+	\item An option granting the right, but not the obligation, to purchase the asset at a settled price at some moment in the future is known as a \textbf{call option}.
+	\item An option granting the right, but not the obligation, to sell the asset at a settled price at some moment in the future is known as a \textbf{put option}.
+\end{enumerate}
+
+\textbf{Hedging} uses financial derivatives in transaction to insure against price movements, lowering the risk involved in an investment \citep{Maths}.
+\\
+
+Any collection of financial assets such as stocks, bonds or cash equivalents held by a company or investment institution is known as a \textbf{portfolio} \citep{Maths}.
+\\
+
+The date at which the an option expires is known as the \textbf{expiration date}. Any time after this date, the option becomes worthless. With respect to the expiration date, the two main option types are:
+\begin{enumerate}
+	\item An option which cannot be exercised until it is the exercise date is known as an \textbf{European option}.
+	\item An \textbf{American option} can be exercised at any point in time up until and on the exercise date.
+\end{enumerate}
+
+\textbf{Arbitrage} is the term used to describe the purchase of an asset in one market and simultaneously sold in another, but at a higher price. It is therefore considered to be risk-free to the trader. Arbitrage opportunities occur because of a result of market inefficiencies. 
+\\
+
+\textbf{Dividends} are shares of after-tax profit a company distributed between its shareholders. The shares are paid out of current profit or from past earnings, which are agreed on by the board of directors, who also decide the amount and when shareholders receive their entitlements. 
+\\
+
+In financial terminology, a \textbf{security} refers to a fungible and transferable tool that possesses some value in terms of money or currency. In very basic terms, securities refer to bonds and stocks. The tools prove an individual owns a section of a public-traded company or is owed a portion of debt. 
+\\
+
+Denoted in equation by $\sigma$, \textbf{volatility} in finance describes the extent of variation a trading price series such as a security goes through over time. It is measured by the standard deviation of logarithmic returns. A higher volatility a security holds, the greater likelihood its price can fluctuate drastically over short periods of time, either positively or negatively. The opposite is apparent with low volatility, with the security varying in value at a steady pace over a period. Volatility is important to investors because of various factors such as presenting an opportunity to buy assets cheaply and sell when overpriced as well as affecting the pricing of options, making it important in the \cite{BSReport} model \citep{Volatility}. 
+\\
+
+The term \textbf{risk-free rate} is a theoretical return an investor would expect from an investment with no underlying risk of financial loss, over a period of time. It is denoted in equation by $r$ \citep{Maths}.
+
+\section{Literature Review} \label{LitReview}
+\subsection{Diffusion Processes}
+Pricing formulas for stock, options and other derivatives are apparent because investors and financial managers are keen to simulate prices in order to aid in investment and financial decisions. A common assumption for stock markets is that they follow Brownian motion, where asset prices are constantly changing by random amounts \citep{Ermogenous}.
+ 
+It can be observed in \citep{Australian} that a GBM pricing formula for shares is made up of two components: certain and uncertain components. Also referred to as the drift of the underlying share, the certain component represents the return over a short period of time. The uncertain component and future stock prices is a stochastic process including the shares volatility along with an element of random volatility \citep{Sengupta}. \citep{Brewer} describe the uncertain component to the GBM model as the product of the stock’s volatility and a stochastic process called Weiner process, which incorporates random volatility and a time interval. Future stocks are believed, at least approximately, to follow a sequence derived from historical data.
+
+\subsection{Black-Scholes}
+Stemming from share pricing models such as GBM models, Fischer Black and Myron Scholes, developed the original option pricing formula outlined in the report "The Pricing of Options and Corporate Liabilities" in \citep{BSReport}. As described in the report by \cite{Shinde} the Black-Scholes option pricing formula prices European put or call options on a stock that does not pay dividends by assuming that the underlying stock price follows a GBM with constant volatility. The pricing formula developed provides an analytical framework in the pricing of options and saw options being used as a financial derivative for the first time \citep{OptionPricing}. \cite{BSReport} state the formula for the pricing of a European call option $(C_O)$ and put option $(P_O)$ as follows.
+
+\begin{equation} \label{BSCallFormula}
+C_O = SN(d_1)-Xe^{-rt}N(d_2)
+\end{equation}
+
+\begin{equation} \label{BSPutFormula}
+P_O = Xe^{-rt}N(-d_2)-SN(-d_1)
+\end{equation}
+
+The two $N(d)$ sections of the put and call pricing equations are cumulative distribution functions for standard normal distribution. They represent the probability that the random variable is less than or equal to $d$, such that $0 < N(d) < 1$. They are denoted below.
+
+\begin{minipage}{0.40\linewidth}  
+	\begin{equation} \label{d_1}
+	d_1 = \frac{\ln{\frac{S}{X}} + (r+\frac{\sigma^2}{2})}{\sigma\sqrt{t}}  
+	\end{equation}  
+\end{minipage}  
+\hspace{0.5cm}  
+\begin{minipage}{0.40\linewidth}  
+	\begin{equation} \label{d_2}
+	d_2 = \frac{\ln{\frac{S}{X}} + (r-\frac{\sigma^2}{2})}{\sigma\sqrt{t}} 
+	\end{equation}  
+\end{minipage}
+\\
+\\
+Five input variables are required:
+
+\begin{enumerate}
+	\item The current stock price $(S)$
+	\item The strike/exercise price of an option $(X)$
+	\item The risk-free rate $(r)$
+	\item The time to expiration $(t)$
+	\item The volatility $(\sigma)$ given as the standard deviation of log returns. 
+\end{enumerate}
+ 
+The report \cite{Shinde} concludes by saying that when applied to financial engineering and call options of an underlying asset, the Black-Scholes partial differential equation is a very useful tool. Using Maple software, it was discovered that the call option price could be varied by varying the parameters of the option pricing formula. \cite{Heston} theorises a solution for options with stochastic volatility and concludes that variance in the Black-Scholes model has a substantial effect in the pricing of financial derivatives. The author argues that the model produces virtually identical results (prices) to stochastic volatility models and states that the Black-Scholes formula is a well performing one because of this.
+
+\subsection{Limitations to Black-Scholes} 
+
+In spite of many obvious advantages to the \cite{BSReport} formula, the model also has its drawbacks and there are many pieces of literature which argue against its use. For instance, \cite{Rubinstein} argues that the model has known biases. The report also states that short‐maturity out‐of‐the‐money calls are priced significantly higher in comparison to other calls of similar nature than the Black‐Scholes formula would predict. This is backed up by \cite{Lauterbach} where it is reported that the constant variance assumption of the dilution adjusted Black‐Scholes model appears to cause biases in model prices for almost all warrants and over the entire sample period.
+
+As well as this, in the report \cite{Melino}, the performance of the model is put into question. It was found that the performance of the \cite{BSReport} formula is significantly worsened when carried out with foreign currency options. The model makes a strong assumption that stock returns are normally distributed with known mean and variance. Allowing volatility to be stochastic results in a much better fit to the empirical distribution of the Canada-U.S. exchange rate. The improvement in fit results in more accurate predictions of observed option prices for Canadian and U.S. options. However, when the formula is used with foreign currencies, the reduced fit means predictions are less accurate. 
+
+The \cite{BSReport} model can only be used to price European options, which today is not ideal when most options are traded are American call options that can be exercised at any point in time. The model also does not allow for dividends, another important and commonly found factor in options of a more recent era. Alternative methods for the pricing of options therefore have to be considered. 
+
+\subsection{Alternatives}
+In \cite{AlternativeModels} it is stated that alternative modelling options have been rapidly appearing in the past two decades that each relax some of the restrictive \cite{BSReport} assumptions. \cite{Australian} argues that although there is an abundance of literature surrounding the pricing of securities in corporate finance; however there is still a lot of debate as to which method is the most reliable. For instance, neural networks can be trained with genetic algorithms in order to reverse-engineer the \cite{BSReport} formulae. \cite{Zapart} reports that these network models produce as accurate and often more accurate results in terms of pricing options on the Chicago Board Options Exchange than the conventional formulae. \cite{Lauterbach} reports that to more accurately price options, without biases, a specific form of the constant elasticity of variance model is required. 
+
+Numerical analysis carried out in \cite{Duan}, suggests that Generalized Autoregressive Conditional Heteroskedasticity (GARCH) modelling may also be able to explain some of the systematic biased surrounding the \cite{BSReport} formulae \citep{GARCH}. Furthermore to this, \cite{Heston2} suggests that even when the models are being updated over a period of time, the GARCH model considerably exceeds the accuracy of the \cite{BSReport} model. It is stated that the cause of the difference between the two models is the fact the GARCH model holds the capacity to describe the volatility with spot returns. 
+
+
+\subsection{Pricing of Cryptocurrencies}
+Bitcoin is a type of digital currency and a worldwide payment system. It is known as a cryptocurrency,  a term used to describe currencies which use encryption techniques to regulate the generation of it's units. The invention of Bitcoin in 2008 \cite{Nakamoto} promoted the development of many more cryptocurrencies, all with different algorithms. The report \cite{Chuen} states that it is the perceived investment potential along with the volatility cryptocurrencies hold, which has led to not only the prices of currencies such as Bitcoin rising substantially but also to the rapid growth of the currency market size. 
+
+The market behaviour of cryptocurrencies is analysed in the article \cite{Wilson-Nunn}. The report shows that the behaviour of Bitcoin in particular, has substantial similarities to stock markets as well as rare metal markets. The analysis focuses on the complexity of pricing behaviour and the range of its measures. This may be partly due to the Internal Revenue Service classifying Bitcoin as an investment property rather than an official currency. 
+
+
+\subsection{Literature Review Conclusion}
+In summary, there are mixed reviews about the efficiency of the Black-Scholes option pricing formula. Some, such as \cite{Shinde} who praises the accuracy of the "time-less" formula. On the other hand, \cite{Zapart} argues with evidence, stating that neural networks trained with genetic algorithms can produce as accurate, if not more accurate results than the BS formula. There are also many sources \cite{Rubinstein}, \cite{Lauterbach} who explain that the formula contains too many biases to be used as an accurate pricing model. 
+
+As well as this, there is limited information that could be found with testing pricing formula methods with cryptocurrencies. \cite{Wilson-Nunn} explains that digital currencies such as Bitcoin have similar markets to stocks and shares, but minimal literature could be found of people using pricing formulas to predict cryptocurrency prices. 
+
+\section{Research Methods}
+\subsection{Research and Experimental Procedures}
+The project will begin with research into the formation of the Black-Scholes partial differential equation (BSPDE) and its derivation via diffusion processes. Finance data will then be collected, as explained in \ref{Required Resources}, and will be immediately tested for log-normality in order to determine whether the sample has been drawn from a normally distributed population. Finance data will also be tested to see if the daily increments of the shares are independent of one another. Following this, the data will be formatted as a solution to the BS formulae and other pricing formulas in order to test their limitations and accuracy. All the above mentioned procedures will be carried out in R, a statistical programming environment.
+
+\subsection{Evaluation Methods and Criteria}
+This section describes how the report aims to decide which pricing model is the most definite. The idea being that a more precise and accurate pricing formula is one that performs closest to the actual option price. Once the data has been tested for normality, I will be using solutions to the \cite{BSReport} pricing model to find prices of various strike data and comparing them to the actual prices obtained from the Yahoo Finance page, as explained in \ref{Required Resources}. Analysis of variance (ANOVA) and various other tests will be carried out to determine if the solution for the BS formula are statistically significant to the actual option prices. I hope to test the solutions of other pricing formulas as well, using the same technique to test the research papers hypothesis. The same procedure will be carried out with cryptocurrency data also, in an attempt to determine if historical prices can help us predict the prices of very volatile stocks such as these digital currencies.
+
+\section{Research Resources and Work Plan}
+
+\subsection{Required Resources} \label{Required Resources}
+I require about 3 months of share data to begin with from a company of my choice along with a few days of options data, spanning the months included in the share data. I will be using Oath Inc's Yahoo!Finance to source the share and option datasets. Following this, I will need to source a cryptocurrency dataset, such as Bitcoin.
+
+\subsection{Risk Factors}
+Although this project has a structured plan, see appendix item \ref{Project Work Plan} below, the dissertation holds some element of risk. The appendix item \ref{Risk Factor Matrix} contains a risk factor matrix relating to various risks that could be faced in the research project along with contingency plans in case they do occur. Each risk is ranked with a score out of 25, 1 being not that much of a risk, 25 being a great risk. This score is made up of two factors, likelihood and severity, and are scored between 1 (less likely/low severity) and 5 (likely/severe). The product of the likelihood and the severity make up the final risk score out of 25.
+
+\subsection{Project Work Plan} 
+The project work plan can be found in the appendix below at item \ref{Project Work Plan}.
+
+
+\subsection{Dissertation Structure}
+\begin{enumerate}[itemsep=0mm]
+	\item Title page
+	\item Acknowledgements
+	\item Abstract
+	\item Contents
+	\item Introduction
+	\item Literature Review
+	\item Research Methods
+	\item Analysis \& Design
+	\item Implementation \& Testing
+	\item Experimental
+	\item Evaluation and Discussion
+	\item Conclusion
+	\item References
+	\item Appendix
+\end{enumerate}
+
+
+\bibliographystyle{apalike}
+\bibliography{100086041DissBib}
+
+\appendix
+\section{Risk Factor Matrix} \label{Risk Factor Matrix}
+
+\begin{tabular}
+	{ |p{3cm}|p{1.1cm}|p{1.5cm}|p{0.8cm}|p{8cm}|  }
+	\hline
+	\footnotesize{Potential Risk} & 
+	\footnotesize{Severity} & 
+	\footnotesize{Likelihood} & 
+	\footnotesize{Risk Score} & 
+	\footnotesize{Contingency Plan} \\
+	\hline
+	Losing all work and data. Could be due to a computer malfunction, such as a hard drive error. & 5 & 1 & 5 & All work so far has already been saved to a back-up memory stick and I will continue to do so during the course of the project. As well as this, I have begun to store all of my code and docs in cloud-storage website called GitHub. Both back-ups make the likelihood of this risk occurring, very low. \\
+	\hline
+	Software failure. & 3 & 1 & 3 & There are alternatives to the R statistic software such as SPSS which can be used instead if things do go really wrong. \\
+	\hline
+	Not being able to find any financial data. & 3 & 2 & 6 & I have already been able to find a few pieces of financial share and option data. The problem may arise if the data collected isn't correct, meaning it would have to be purchased from a 3rd party. \\
+	\hline
+	Dissertation Advisor goes away for a long period of time. & 4 & 2 & 8 & Check absent dates with my supervisor early on to get in the diary any points in which they are away or unable to guide me going forward with the project. \\
+	\hline
+	Falling behind on the project. & 5 & 2 & 10 & By following the project plan below, the likelihood of falling behind is considerably lower. However, unexpected setbacks do occur. If a setback occurs, the first place to go is to my dissertation advisor to discuss options and plan the steps to take a different approach. \\
+	\hline
+	Struggling to use coding language/errors in code. & 4 & 3 & 12 & Although already fairly confident with the R language, coding errors do occur. I need to go through the necessary step and ensure my code is correctly formatted to easily correct bugs. \\
+	\hline
+	
+	
+\end{tabular}
+
+\section{Project Work Plan} \label{Project Work Plan}
+\includegraphics[scale=0.38, angle=0] {"Project Work Plan".png} 
+
+\end{document}
